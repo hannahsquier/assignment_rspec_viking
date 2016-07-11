@@ -6,6 +6,7 @@ describe Viking do
   let(:gun) { Weapon.new("Gun") }
   let(:sling) { Weapon.new("Sling") }
 
+
   describe '#initialize' do
     it "takes a name attribute" do
       expect(bob.name).to eq("Bob")
@@ -79,6 +80,7 @@ describe Viking do
     end
 
     it 'attacking with no weapon runs damage_with_fists' do
+      bob.instance_variable_set(:@weapon, nil)
       expect(bob).to receive(:damage_with_fists)
       bob.attack(obo)
     end

@@ -1,9 +1,10 @@
 require_relative 'weapons/axe'
 require_relative 'weapons/bow'
 require_relative 'weapons/fists'
-
+require 'pry'
 class Viking
   attr_reader :health, :strength, :name, :weapon
+
 
   def initialize(name="RandomViking", health = 100, strength = 10, weapon = nil)
     @name = name
@@ -19,8 +20,8 @@ class Viking
     target.receive_attack(damage_dealt)
   end
 
-  def receive_attack(damage_dealt)
-    take_damage(damage_dealt)
+  def receive_attack(damage_dealt_var)
+    take_damage(damage_dealt_var)
     puts "#{name} took #{damage_dealt} damage and has #{health} health..."
   end
 
@@ -36,7 +37,9 @@ class Viking
   private
   def damage_dealt
     if @weapon
+      binding.pry
       damage_with_weapon
+
     else
       damage_with_fists
     end
