@@ -3,6 +3,7 @@ require 'viking'
 describe Viking do
   let(:bob) { Viking.new("Bob", 10) }
   let(:obo) {Viking.new("Obo", 15)}
+  let(:jim) {Viking.new("jim", 15, 8)}
   let(:gun) { Weapon.new("Gun") }
   let(:sling) { Weapon.new("Sling") }
 
@@ -80,8 +81,7 @@ describe Viking do
     end
 
     it 'attacking with no weapon runs damage_with_fists' do
-      bob.instance_variable_set(:@weapon, nil)
-      expect(bob).to receive(:damage_with_fists)
+      expect(bob).to receive(:damage_with_fists).and_return(1)
       bob.attack(obo)
     end
   end

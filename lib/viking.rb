@@ -16,6 +16,7 @@ class Viking
 
 
   def attack(target)
+    # binding.pry
     puts "#{name} is attacking #{target.name}!"
     target.receive_attack(damage_dealt)
   end
@@ -37,7 +38,7 @@ class Viking
   private
   def damage_dealt
     if @weapon
-      binding.pry
+      # binding.pry
       damage_with_weapon
 
     else
