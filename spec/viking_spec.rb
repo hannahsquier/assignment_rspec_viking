@@ -6,6 +6,7 @@ describe Viking do
   let(:jim) {Viking.new("jim", 15, 8)}
   let(:gun) { Weapon.new("Gun") }
   let(:sling) { Weapon.new("Sling") }
+  let(:bow_no_arrows) { Bow.new(0) }
 
 
   describe '#initialize' do
@@ -81,8 +82,39 @@ describe Viking do
     end
 
     it 'attacking with no weapon runs damage_with_fists' do
-      expect(bob).to receive(:damage_with_fists).and_return(1)
+      allow(bob).to receive(:damage_with_fists).and_return(1)
+      expect(bob).to receive(:damage_with_fists)
       bob.attack(obo)
+    end
+
+    it "with no weapon deals Fists multiplier times strenght damage" do
+      
+      jim.attack(bob)
+      expect(jim.send(:damage_dealt)).to eq(2)
+    end
+
+    it 'attacking with weapon runs damage_with_weapon' do
+      bob.instance_variable_set(:@weapon, gun)
+      allow(bob).to receive(:damage_with_weapon).and_return(1)
+      expect(bob).to receive(:damage_with_weapon)
+      bob.attack(obo)
+    end
+
+    it "with weapon deals weapon multiplier times strengh damage" do
+      jim.instance_variable_set(:@weapon, gun)
+      jim.attack(bob)
+      expect(jim.send(:damage_dealt)).to eq(8)
+    end
+
+    it "with bow without enough arrows uses fists instead" do
+      jim.instance_variable_set(:@weapon, bow_no_arrows)
+      allow(jim).to receive(:damage_with_fists).and_return(1)
+      expect(jim).to receive(:damage_with_fists)
+      jim.attack(obo)
+    end
+
+    it "killing a viking raises an error" do
+      expect{ jim.health = 0 }.to raise_error
     end
   end
 
